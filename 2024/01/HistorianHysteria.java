@@ -16,16 +16,17 @@ public class HistorianHysteria {
         Collections.sort(left);
         Collections.sort(right);
         System.out.println("Example distance: " + computeDistance(left, right));
+        System.out.println("Example similarity: " + computeSimilarity(left, right));
 
         left.clear();
         right.clear();
-        
-        readInput("partOne.txt", left, right);
+
+        readInput("input.txt", left, right);
         Collections.sort(left);
         Collections.sort(right);
-        System.out.println("Part one distance: " + computeDistance(left, right));
+        System.out.println("Input distance: " + computeDistance(left, right));
+        System.out.println("Input similarity: " + computeSimilarity(left, right));
     }
-
 
 
      /* 
@@ -52,12 +53,29 @@ public class HistorianHysteria {
         }
     }
 
+    private static int computeSimilarity(ArrayList<Integer> left, ArrayList<Integer> right) {
+        int similarity = 0;
+        for(int n : left) {
+            similarity += (n * countOf(n, right)); 
+        }
+        return similarity;
+    }
+
     private static int computeDistance(ArrayList<Integer> left, ArrayList<Integer> right) {
         int distance = 0; 
         for(int i = 0; i < left.size(); i++) {
             distance += Math.abs(left.get(i) - right.get(i));
         }
         return distance;
+    }
+
+    private static int countOf(int value, ArrayList<Integer> list) {
+        int count = 0;
+        for(int n : list) {
+            if(n == value) count += 1; 
+        }
+
+        return count;
     }
 
 }
