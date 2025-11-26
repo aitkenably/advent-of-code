@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 // https://adventofcode.com/2024/day/2
 public class RedNosedReports {
@@ -22,38 +23,33 @@ public class RedNosedReports {
             String line;
             int safe = 0;
             while((line = reader.readLine()) != null) {
-                String[] strNs = line.strip().split("\\s+");
                 ArrayList<Integer> levels = new ArrayList<>();
-                for(int i = 0; i < strNs.length; i++) {
-                    levels.add(Integer.parseInt(strNs[i]));
-                }
+                Arrays.stream(line.strip().split("\\s+"))
+                    .forEach(s -> levels.add(Integer.parseInt(s)));
 
-                if(increasingOrDecreasing(levels) && gradualChange(levels))
-                    safe += 1;     
+                if(isSafe(levels))
+                    safe += 1;
             }
          
             return safe; 
         }
     }
 
-
-    public static boolean gradualChange(ArrayList<Integer> levels) {
-        for(int i = 0; i < levels.size() - 1; i++) {
-            int abs = Math.abs(levels.get(i).intValue() - levels.get(i + 1).intValue()); 
-            if(abs < 1 || abs > 3) return false;
-        }
-
-        return true; 
+    public static boolean isGradual(Integer a, Integer b) {
+        final int diff = Math.abs(a - b);
+        return (diff >= 1 && diff <= 3);
     }
 
-    public static boolean increasingOrDecreasing(ArrayList<Integer> levels) {
+    public static boolean isSafe(ArrayList<Integer> levels) {
         if(levels.get(0) < levels.get(1)) {
             for(int i = 0; i < levels.size() - 1; i++) {
                 if(levels.get(i) >= levels.get(i + 1)) return false;
+                if(!isGradual(levels.get(i), levels.get(i + 1))) return false; 
             }
         } else {
             for(int i = 0; i < levels.size() - 1; i++) {
                 if(levels.get(i) <= levels.get(i + 1)) return false;
+                if(!isGradual(levels.get(i), levels.get(i + 1))) return false; 
             }
         }
 
