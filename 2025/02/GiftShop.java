@@ -1,8 +1,5 @@
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 public class GiftShop {
@@ -20,9 +17,8 @@ public class GiftShop {
         // Part Two
         // Correct answer: 4174379265
         System.out.println(sumInvalidIds2("example.txt"));
-        // Correct answer: 
+        // Correct answer: 41662374059
         System.out.println(sumInvalidIds2("input.txt"));
-
     }
 
     public static long sumInvalidIds(String fileName) {
